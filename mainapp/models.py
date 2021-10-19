@@ -1,3 +1,6 @@
+import datetime
+from datetime import timedelta
+
 from django.db import models
 
 
@@ -10,8 +13,9 @@ class Car(models.Model):
 
 class Record(models.Model):
     file_name = models.CharField(max_length=255)
-    date_time = models.DateTimeField()
-    car = models.ForeignKey(Car, on_delete=models.PROTECT)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    car = models.ForeignKey(Car, on_delete=models.PROTECT, null=True)  # need to remove null
     is_deleted = models.BooleanField(default=False)
 
     class Meta:

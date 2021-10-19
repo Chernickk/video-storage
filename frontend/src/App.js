@@ -1,6 +1,8 @@
-import logo from './logo.svg';
 import {Route, BrowserRouter, Switch, Redirect} from "react-router-dom";
 import './App.css';
+import react from "react";
+import RecordForm from "./components/RecordForm";
+import NotFound404 from './components/NotFound404.jsx';
 
 class App extends react.Component {
   constructor(props) {
@@ -27,20 +29,20 @@ class App extends react.Component {
 
   render() {
     return (
-      <div>
+      <div className={'container'}>
         <BrowserRouter>
 
-          <Menu/>
+
 
           <Switch>
 
-            <Route exact path='/' component={() => <UserList users = {this.state.users} />} />
+            <Route exact path='/' component={() => <RecordForm/>} />
 
             <Route component={NotFound404}/>
 
           </Switch>
 
-          <Footer/>
+
 
         </BrowserRouter>
       </div>
