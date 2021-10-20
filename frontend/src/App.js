@@ -15,24 +15,12 @@ class App extends react.Component {
   }
 
   componentDidMount() {
-    // axios.get('http://127.0.0.1:8000/api/users')
-    //     .then(response => {
-    //       const users = response.data
-    //
-    //       this.setState(
-    //           {
-    //             'users': users.results
-    //           }
-    //       )
-    //     }).catch(error => console.log(error))
   }
 
   render() {
     return (
       <div className={'container'}>
         <BrowserRouter>
-
-
 
           <Switch>
 
@@ -41,8 +29,6 @@ class App extends react.Component {
             <Route component={NotFound404}/>
 
           </Switch>
-
-
 
         </BrowserRouter>
       </div>

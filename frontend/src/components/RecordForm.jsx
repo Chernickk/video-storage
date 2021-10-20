@@ -33,12 +33,12 @@ class RecordForm extends Component {
         .then(response => {
             const cars = response.data
             this.setState(
-              {
-                'cars': cars
-              }
-          )
+                {
+                    'cars': cars
+                }
+            )
         }).catch(error => console.log(error))
-  }
+    }
 
     handleChange(event, name) {
         this.setState(
@@ -47,8 +47,6 @@ class RecordForm extends Component {
             }
         );
     }
-
-
 
     handleError(error) {
         console.log(error)
@@ -93,7 +91,8 @@ class RecordForm extends Component {
             {params:
                     {'from_time': this.state.from_datetime.toLocaleString('ru-Ru'),
                         'to_time': this.state.to_datetime.toLocaleString('ru-Ru'),
-                        'car_id': this.state.select_value.value}})
+                        'car_id': this.state.select_value.value}
+            })
         .then(response => {
             this.handleResponse(response)
         }).catch(error => this.handleError(error))
@@ -107,55 +106,54 @@ class RecordForm extends Component {
 
                 <form onSubmit={(event) => this.handleSubmit(event)}>
 
+                    <div className={'date_form'}>
 
+                        <h1>Get video</h1>
 
-                <div className={'date_form'}>
-                    <h1>Get video</h1>
-                    <Select options={this.state.cars.map(car => {
-                                return {
-                                    value: `${car.id}`,
-                                    label: `${car.name}`
+                        <Select options={this.state.cars.map(car => {
+                                    return {
+                                        value: `${car.id}`,
+                                        label: `${car.name}`
+                                    }
                                 }
-                            }
-                        )}
-                            value={this.state.select_value}
-                            onChange={(event) => this.handleChange(event, 'select_value')}
-                    />
-
-                    <DateTimePicker
-                    onChange={(event) => this.handleChange(event, 'from_datetime')}
-                    format="y-MM-dd HH:mm:ss"
-                    value={ this.state.from_datetime }
-                    disableClock={ true }
-                    maxDate={ new Date() }
-                    required={ true }
-                />
-
-                <DateTimePicker
-                    onChange={(event) => this.handleChange(event, 'to_datetime')}
-                    format="y-MM-dd HH:mm:ss"
-                    value={ this.state.to_datetime }
-                    disableClock={ true }
-                    minDate={ this.state.from_datetime }
-                    maxDate={ new Date() }
-                    required={ true }
-                />
-
-                <input type="submit" value="Submit"/>
-                    {this.state.show_message && <h3>{ this.state.message_text }</h3>}
-                    {this.state.show_loader && <div className={'loader-spinner'}>
-
-                        <Loader
-                            type="TailSpin"
-                            color="#000000"
-                            height={100}
-                            width={100}
-                            timeout={0} //3 secs
+                            )}
+                                value={this.state.select_value}
+                                onChange={(event) => this.handleChange(event, 'select_value')}
                         />
 
+                        <DateTimePicker
+                            onChange={(event) => this.handleChange(event, 'from_datetime')}
+                            format="y-MM-dd HH:mm:ss"
+                            value={ this.state.from_datetime }
+                            disableClock={ true }
+                            maxDate={ new Date() }
+                            required={ true }
+                        />
+
+                        <DateTimePicker
+                            onChange={(event) => this.handleChange(event, 'to_datetime')}
+                            format="y-MM-dd HH:mm:ss"
+                            value={ this.state.to_datetime }
+                            disableClock={ true }
+                            minDate={ this.state.from_datetime }
+                            maxDate={ new Date() }
+                            required={ true }
+                        />
+
+                        <input type="submit" value="Submit"/>
+                            {this.state.show_message && <h3>{ this.state.message_text }</h3>}
+                            {this.state.show_loader && <div className={'loader-spinner'}>
+
+                                <Loader
+                                    type="TailSpin"
+                                    color="#000000"
+                                    height={100}
+                                    width={100}
+                                    timeout={0}
+                                />
+                            </div>
+                        }
                     </div>
-                    }
-                </div>
                 </form>
             </div>
         );

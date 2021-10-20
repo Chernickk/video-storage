@@ -3,6 +3,7 @@ import subprocess
 from datetime import datetime, timedelta
 from uuid import uuid4
 
+from django.conf import settings
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from moviepy.editor import VideoFileClip
 
@@ -30,11 +31,14 @@ def get_subclip(record, start_time, end_time):
     else:
         end_offset = end_time
 
+    if not os.path.exists(settings.TEMP_MEDIA_FOLDER):
+        os.mkdir(settings.TEMP_MEDIA_FOLDER)
+
     ffmpeg_extract_subclip(
         filename=f'media/{filename}',
         t1=start_offset,
         t2=end_offset,
-        targetname=output_filename
+        targetname=os.path.join(settings.TEMP_MEDIA_FOLDER, output_filename)
     )
 
     return output_filename
@@ -48,7 +52,12 @@ def make_clip_from_two_subclips(record1, record2, start_time, end_time):
 
     output_filename = create_new_filename(record1.file_name)
 
-    subprocess.call(['mkvmerge', '-o', f'{output_filename}', f'{file1}', '+', f'{file2}'])
+    subprocess.call(['mkvmerge',
+                     '-o',
+                     f'{os.path.join(settings.TEMP_MEDIA_FOLDER, output_filename)}',
+                     f'{file1}',
+                     '+',
+                     f'{file2}'])
 
     os.remove(file1)
     os.remove(file2)

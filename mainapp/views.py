@@ -1,6 +1,8 @@
+import os
 from datetime import datetime
 from wsgiref.util import FileWrapper
 
+from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -16,7 +18,7 @@ def index(request):
 
 
 def video_view(request, filename):
-    file = FileWrapper(open(f'{filename}', 'rb'))
+    file = FileWrapper(open(f'{os.path.join(settings.TEMP_MEDIA_FOLDER, filename)}', 'rb'))
     response = HttpResponse(file, content_type='video/avi')
     response['Content-Disposition'] = f'attachment; filename={filename}'
     return response
