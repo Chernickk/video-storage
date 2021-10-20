@@ -1,6 +1,3 @@
-import datetime
-from datetime import timedelta
-
 from django.db import models
 
 
@@ -15,8 +12,18 @@ class Record(models.Model):
     file_name = models.CharField(max_length=255)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    car = models.ForeignKey(Car, on_delete=models.PROTECT, null=True)  # need to remove null
+    car = models.ForeignKey(Car, on_delete=models.PROTECT)
     is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'record'
+
+
+class GPS(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.PROTECT)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    datetime = models.DateTimeField()
+
+    class Meta:
+        db_table = 'gps'

@@ -87,16 +87,28 @@ class RecordForm extends Component {
                 'message_text': 'Please, wait for your link'
             }
         );
-        axios.get(`http://${url}/api/get_record_link`,
-            {params:
-                    {'from_time': this.state.from_datetime.toLocaleString('ru-Ru'),
-                        'to_time': this.state.to_datetime.toLocaleString('ru-Ru'),
-                        'car_id': this.state.select_value.value}
-            })
-        .then(response => {
-            this.handleResponse(response)
-        }).catch(error => this.handleError(error))
-
+        const time_diff = (this.state.to_datetime - this.state.from_datetime) / 1000;
+        if (time_diff <= 300) {
+            axios.get(`http://${url}/api/get_record_link`,
+                {
+                    params:
+                        {
+                            'from_time': this.state.from_datetime.toLocaleString('ru-Ru'),
+                            'to_time': this.state.to_datetime.toLocaleString('ru-Ru'),
+                            'car_id': this.state.select_value.value
+                        }
+                })
+                .then(response => {
+                    this.handleResponse(response)
+                }).catch(error => this.handleError(error))
+        } else {
+            this.setState(
+                {
+                    'message_text': 'Clip must be less then 5 minutes',
+                    'show_loader': false
+                }
+            );
+        }
         event.preventDefault();
     }
 
