@@ -13,10 +13,6 @@ from .models import Car
 from .serializers import CarSerializer
 
 
-def index(request):
-    return render(request, 'index.html')
-
-
 def video_view(request, filename):
     file = FileWrapper(open(f'{os.path.join(settings.TEMP_MEDIA_FOLDER, filename)}', 'rb'))
     response = HttpResponse(file, content_type='video/avi')
