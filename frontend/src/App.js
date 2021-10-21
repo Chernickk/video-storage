@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Switch, Redirect} from "react-router-dom";
+import {Route, BrowserRouter, Switch} from "react-router-dom";
 import './App.css';
 import react from "react";
 import RecordForm from "./components/RecordForm";

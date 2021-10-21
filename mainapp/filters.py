@@ -10,4 +10,4 @@ class GPSFilterSet(FilterSet):
 
     class Meta:
         model = GPS
-        fields = ['from_datetime', 'to_datetime']
+        fields = ['from_datetime', 'to_datetime', 'car__id']
