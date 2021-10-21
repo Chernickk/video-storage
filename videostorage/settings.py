@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_filters',
+    'crispy_forms',
     'corsheaders',
 
     'mainapp',
@@ -142,8 +144,14 @@ STATICFILES_DIRS = [
 
 TEMP_MEDIA_FOLDER = 'media/temp'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

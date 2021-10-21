@@ -7,10 +7,12 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django.shortcuts import HttpResponse
+from django_filters import rest_framework
 
 from .service import get_output_file
-from .models import Car
-from .serializers import CarSerializer
+from .models import Car, GPS
+from .serializers import CarSerializer, GPSSerializer
+from .filters import GPSFilterSet
 
 
 def video_view(request, filename):
@@ -50,3 +52,9 @@ class GetRecordLink(APIView):
 class GetCars(ModelViewSet):
     serializer_class = CarSerializer
     queryset = Car.objects.all()
+
+
+class GetGPS(ModelViewSet):
+    serializer_class = GPSSerializer
+    queryset = GPS.objects.all()
+    filterset_class = GPSFilterSet
