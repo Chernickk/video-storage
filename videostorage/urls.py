@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
-from mainapp.views import GetRecordLink, GetCars, index, video_view
+from mainapp.views import GetRecordLink, GetCars, video_view
 
 
 urlpatterns = [

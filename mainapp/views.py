@@ -6,7 +6,7 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
 
 from .service import get_output_file
 from .models import Car
