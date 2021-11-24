@@ -1,0 +1,10 @@
+version: 3.8
+services:
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "video"
+      POSTGRES_USER: "video"
+      POSTGRES_PASSWORD: "expotorgpsw"
+    ports:
+      - "5432:5432"
