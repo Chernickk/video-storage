@@ -72,7 +72,8 @@ ROOT_URLCONF = 'videostorage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'frontend/build'],
+        'DIRS': [BASE_DIR / 'frontend/build',
+                 BASE_DIR / 'frontend/public'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

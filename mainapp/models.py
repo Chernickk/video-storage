@@ -8,23 +8,17 @@ class Car(models.Model):
         db_table = 'car'
 
 
-class Item(models.Model):
+class Action(models.Model):
     uuid = models.CharField(max_length=128)
+    start_time = models.DateTimeField()
+    finish_time = models.DateTimeField()
 
     class Meta:
-        db_table = 'item'
+        db_table = 'action'
 
 
 class Record(models.Model):
-    class ActionType(models.TextChoices):
-        MOVEMENT = 'MV', 'Movement'
-        LOADING = 'LO', 'Loading'
-        UNLOADING = 'UL', 'Unloading'
-
-    action = models.CharField(max_length=2,
-                              choices=ActionType.choices,
-                              null=True)
-    item = models.ForeignKey(Item,
+    item = models.ForeignKey(Action,
                              on_delete=models.PROTECT,
                              null=True)
     file_name = models.CharField(max_length=255)
