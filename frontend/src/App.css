@@ -1,0 +1,112 @@
+
+body {
+    font-family: Gill Sans Extrabold, sans-serif;
+}
+
+a {
+    text-decoration: None;
+    color: white;
+}
+
+
+.App {
+  text-align: center;
+}
+
+.date_form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  width: 100vw;
+  justify-content: space-evenly;
+  max-width: 350px;
+}
+
+.container {
+    margin: 0 auto;
+    background-color: #cfe8ff;
+
+    display: grid;
+    /*justify-content: center;*/
+    grid-template-areas:
+    "header header"
+    "nav form"
+    "footer footer";
+    width: 100vh;
+    height: 100vh;
+    grid-gap: 10px;
+}
+
+.Header {
+    grid-area: header;
+    height: 10vh;
+}
+
+.Nav {
+
+    grid-area: nav;
+    height: 90vh;
+    width: 30vh;
+}
+
+.Content {
+    grid-area: form;
+    height: 80vh;
+    width: 70vh;
+}
+
+.Footer {
+    grid-area: footer;
+    height: 10vh;
+}
+
+.select {
+    box-shadow: 0 0 30px #383838;
+}
+
+.datetime-picker {
+    box-shadow: 0 0 30px #383838;
+}
+
+.loader-spinner {
+    box-shadow: 0 0 30px #383838;
+}
+
+.submit-button {
+    height: 40px;
+    background-color: black;
+    color: white;
+    font-weight: 900;
+    font-size: 20px;
+    box-shadow: 0 0 30px #383838;
+}
+
+.table-header {
+    width: 500px;
+}
+
+.files-table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 14px;
+    text-align: left;
+    background: #252F48;
+    max-width: 350px;
+    box-shadow: 0 0 30px #383838;
+}
+
+.files-table th {
+    color: #EDB749;
+    border: 1px solid #37B5A5;
+    padding: 12px 5px;
+}
+
+.files-table td {
+    color: #CAD4D6;
+    border: 1px solid #37B5A5;
+    padding: 7px 5px;
+}
+
+.files-table tr:hover td {
+    text-decoration: underline;
+}
