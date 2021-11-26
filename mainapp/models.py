@@ -3,6 +3,7 @@ from django.db import models
 
 class Car(models.Model):
     name = models.CharField(max_length=255)
+    license_table = models.CharField(max_length=15, null=True)
 
     class Meta:
         db_table = 'car'
@@ -17,6 +18,17 @@ class Action(models.Model):
         db_table = 'action'
 
 
+class Request(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.DO_NOTHING)
+    start_time = models.DateTimeField()
+    finish_time = models.DateTimeField()
+    delivered = models.BooleanField(default=False)
+    record_status = models.BooleanField(null=True)
+
+    class Meta:
+        db_table = 'request'
+
+
 class Record(models.Model):
     item = models.ForeignKey(Action,
                              on_delete=models.PROTECT,
@@ -25,6 +37,7 @@ class Record(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     car = models.ForeignKey(Car, on_delete=models.PROTECT, null=True)
+    request = models.ForeignKey(Request, on_delete=models.DO_NOTHING, null=True)
 
     class Meta:
         db_table = 'record'
@@ -38,3 +51,6 @@ class GPS(models.Model):
 
     class Meta:
         db_table = 'gps'
+
+
+

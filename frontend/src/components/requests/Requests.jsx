@@ -7,40 +7,24 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import Select from "react-select";
 import axios from "axios";
+import RequestsTable from "./RequestsTable";
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-const url = '127.0.0.1:8000'
-
-class RequestForm extends Component {
+class Requests extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            select_value: '',
             from_datetime: '',
             to_datetime: '',
-            show_loader: false,
-            show_message: false,
-            show_coordinates: false,
-            message_text: '',
-            select_value: '',
-            cars: [],
-            filenames: [],
-            coordinates: []
+            cars: props.cars,
+            requests: props.requests,
+
         }
     }
 
     componentDidMount() {
-        axios.get(`http://${url}/api/get_cars`)
-        .then(response => {
-            const cars = response.data
-            this.setState(
-                {
-                    'cars': cars
-                }
-            )
-        }).catch(error => console.log(error))
+
     }
 
     handleChange(event, name) {
@@ -53,84 +37,25 @@ class RequestForm extends Component {
 
     handleError(error) {
         console.log(error)
-        this.setState(
-            {
-                'message_text': 'Some error occured, please try again later',
-                'show_loader': false
-            }
-        );
     }
 
 
     handleResponse(response) {
-        if (response.data['status'] === 'OK') {
-            this.setState(
-                {
-                    'filenames': response.data['filename'],
-                    'show_loader': false,
-                    'show_message': false,
-                    'show_coordinates': true,
-                }
-            );
-        } else {
-            this.setState(
-                {
-                    'message_text': response.data['status'],
-                    'show_loader': false
-                }
-            );
-        }
+
     }
 
     handleSubmit(event) {
-        this.setState(
+        axios.post(`http://127.0.0.1:8000/api/requests`,
             {
-                'show_loader': true,
-                'show_message': true,
-                'message_text': 'Please, wait for your link'
-            }
-        );
-        const time_diff = (this.state.to_datetime - this.state.from_datetime) / 1000;
-        if (time_diff <= 300 && time_diff >= 10) {
-            axios.get(`http://${url}/api/get_record_link`,
-                {
-                    params:
-                        {
-                            'from_time': this.state.from_datetime.toLocaleString('ru-Ru'),
-                            'to_time': this.state.to_datetime.toLocaleString('ru-Ru'),
-                            'car_id': this.state.select_value.value,
-
-                        }
-                })
-                .then(response => {
-                    this.handleResponse(response)
-                }).catch(error => this.handleError(error))
-
-            axios.get(`http://${url}/api/get_gps`,
-                {
-                    params:
-                        {
-                            'from_datetime': this.state.from_datetime.toISOString(),
-                            'to_datetime': this.state.to_datetime.toISOString(),
-                            'car_id': this.state.select_value.value
-                        }
-                })
-                .then(response => {
-                    console.log(response)
-                    this.setState({
-                        'coordinates': response.data
-                    })
-                }).catch(error => console.log(error))
-
-        } else {
-            this.setState(
-                {
-                    'message_text': 'Clip must be more then 10 seconds and less then 5 minutes',
-                    'show_loader': false
-                }
-            );
-        }
-        event.preventDefault();
+                        'car': this.state.select_value.value,
+                        'start_time': this.state.from_datetime.toISOString(),
+                        'finish_time': this.state.to_datetime.toISOString(),
+            })
+            .then(response => {
+                // this.handleResponse(response)
+                console.log(response)
+            }).catch(error => this.handleError(error))
+        event.preventDefault()
     }
 
     render() {
@@ -187,6 +112,7 @@ class RequestForm extends Component {
                                     />
                                 </div>
                             }
+                        <RequestsTable requests={this.state.requests}/>
                     </div>
 
 
@@ -196,4 +122,4 @@ class RequestForm extends Component {
     }
 }
 
-export default RequestForm;
+export default Requests;

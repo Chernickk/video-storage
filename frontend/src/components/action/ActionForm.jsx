@@ -140,8 +140,10 @@ class ActionForm extends Component {
 
                 <button
                     value="Submit"
-                    className={"submit-button"}
-                    onClick={(event) => this.handleSubmit(event)}/>
+                    className={`${classes.button} submit-button`}
+                    onClick={(event) => this.handleSubmit(event)}>
+                    submit
+                </button>
             </div>
         );
     }

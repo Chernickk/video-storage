@@ -33,7 +33,7 @@ class RecordForm extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://${url}/api/get_cars`)
+        axios.get(`http://${url}/api/cars`)
         .then(response => {
             const cars = response.data
             this.setState(
