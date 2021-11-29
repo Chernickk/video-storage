@@ -25,7 +25,7 @@ class App extends react.Component {
     }
 
     componentDidMount() {
-        axios.get(`http://127.0.0.1:8000/api/cars`)
+        axios.get(`/api/cars`)
             .then(response => {
                 const cars = response.data
                 console.log(cars)
@@ -37,10 +37,11 @@ class App extends react.Component {
                 )
             }).catch(error => console.log(error))
 
-        axios.get(`http://127.0.0.1:8000/api/requests`)
+        axios.get(`/api/requests`)
             .then(response => {
-                const requests = response.data
-                console.log(requests)
+                let requests = response.data
+                requests.sort((request) => request.id)
+                requests.reverse()
                 this.setState(
                     {
                         'requests': requests,
