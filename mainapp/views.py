@@ -11,7 +11,7 @@ from .serializers import CarSerializer, RequestSerializer
 
 def video_view(request, car_license_table, filename):
     print(os.path.join(settings.REQUEST_MEDIA_FOLDER, car_license_table, filename))
-    file = FileWrapper(open(f'{os.path.join(settings.REQUEST_MEDIA_FOLDER, car_license_table, filename)}', 'rb'))
+    file = FileWrapper(open(f'{os.path.join(settings.MEDIA_FOLDER, car_license_table, filename)}', 'rb'))
     response = HttpResponse(file, content_type='video/mp4')
     response['Content-Disposition'] = f'attachment; filename={filename}'
     return response

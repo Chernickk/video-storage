@@ -1,10 +1,35 @@
-version: 3.8
+version: '3.8'
 services:
-  postgres:
-    image: postgres:13.3
-    environment:
-      POSTGRES_DB: "video"
-      POSTGRES_USER: "video"
-      POSTGRES_PASSWORD: "expotorgpsw"
+  frontend:
+    build: ./frontend
+    volumes: 
+      - app-frontend:/app
+
+      
+  backend:
+    build: .
+    privileged: true
     ports:
-      - "5432:5432"
+      - 8080:8080
+    command: bash -c "
+        python manage.py migrate &&
+        python manage.py collectstatic --noinput &&
+        gunicorn --bind 0.0.0.0:8080 videostorage.wsgi"
+    volumes:
+      - app-frontend:/frontend
+    depends_on:
+      - frontend
+    restart:
+      always
+      
+  nginx:
+    build: ./nginx
+    ports: 
+      - 8000:80
+    depends_on:
+      - backend
+    volumes:
+      - app-frontend:/frontend
+      
+volumes:
+  app-frontend:
