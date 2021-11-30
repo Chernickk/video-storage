@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 
-from mainapp.views import CarViewSet, RequestViewSet
+from mainapp.views import CarViewSet, RequestViewSet, video_view
 
 router = DefaultRouter(trailing_slash=False)
 router.register('cars', CarViewSet, basename='cars')
@@ -16,5 +16,6 @@ urlpatterns = [
     # path('media/<str:filename>', video_view),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('request/<str:car_license_table>/<str:filename>', video_view),
     re_path(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

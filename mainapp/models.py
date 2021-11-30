@@ -19,7 +19,7 @@ class Action(models.Model):
 
 
 class Request(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.DO_NOTHING)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     finish_time = models.DateTimeField()
     delivered = models.BooleanField(default=False)
@@ -30,14 +30,14 @@ class Request(models.Model):
 
 
 class Record(models.Model):
-    item = models.ForeignKey(Action,
-                             on_delete=models.PROTECT,
-                             null=True)
+    action = models.ForeignKey(Action,
+                               on_delete=models.PROTECT,
+                               null=True)
     file_name = models.CharField(max_length=255)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True)
     car = models.ForeignKey(Car, on_delete=models.PROTECT, null=True)
-    request = models.ForeignKey(Request, on_delete=models.DO_NOTHING, null=True)
+    request = models.ForeignKey(Request, on_delete=models.CASCADE, null=True, related_name='records')
 
     class Meta:
         db_table = 'record'
@@ -51,6 +51,3 @@ class GPS(models.Model):
 
     class Meta:
         db_table = 'gps'
-
-
-

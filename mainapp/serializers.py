@@ -16,6 +16,8 @@ class CarSerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
+    records = RecordSerializer(many=True, read_only=True)
+
     class Meta:
         model = Request
         fields = '__all__'
