@@ -56,14 +56,25 @@ def merge_clips(clips: List[str], input_path, out_path: str) -> str:
     with open('input.txt', 'w') as f:
         for filename in clips:
             f.write(f"file '{os.path.join(input_path, filename)}'\n")
+    if os.name == 'nt':
+        command = ['C:\\Program Files\\ffmpeg\\ffmpeg.exe',
+                   '-f', 'concat',
+                   '-safe', '0',
+                   '-i', 'input.txt',
+                   '-c', 'copy',
+                   '-y', output_path]
+    else:
+        command = ['ffmpeg',
+                   '-f', 'concat',
+                   '-safe', '0',
+                   '-i', 'input.txt',
+                   '-c', 'copy',
+                   '-y', output_path]
 
-    subprocess.call(['ffmpeg',
-                     '-f', 'concat',
-                     '-safe', '0',
-                     '-i', 'input.txt',
-                     '-c', 'copy',
-                     '-y', output_path])
+    subprocess.call(command)
 
     os.remove('input.txt')
+    for filename in clips:
+        os.remove(os.path.join(input_path, filename))
 
     return output_name
