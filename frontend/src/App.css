@@ -47,13 +47,16 @@ a {
 
     grid-area: nav;
     height: 90vh;
-    width: 30vh;
+    width: 3vh;
 }
 
 .Content {
     grid-area: form;
     height: 80vh;
     width: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .Footer {

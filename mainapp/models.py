@@ -1,4 +1,7 @@
+import os
+
 from django.db import models
+from django.conf import settings
 
 
 class Car(models.Model):
@@ -41,6 +44,17 @@ class Record(models.Model):
 
     class Meta:
         db_table = 'record'
+
+    def delete(self, using=None, keep_parents=False):
+        if not self.request:
+            path = os.path.join(settings.REQUEST_MEDIA_FOLDER, self.car.license_table, 'temp', self.file_name)
+        else:
+            path = os.path.join(settings.REQUEST_MEDIA_FOLDER, self.car.license_table, 'requests', self.file_name)
+
+        if os.path.exists(path):
+            os.remove(path)
+
+        return super().delete()
 
 
 class GPS(models.Model):

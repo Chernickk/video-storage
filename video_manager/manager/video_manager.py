@@ -18,7 +18,8 @@ class VideoManager(Thread):
     def check_upload_progress(self, files: List[str], path) -> bool:
         for file in files:
             create_dt = datetime.fromtimestamp(os.path.getmtime(os.path.join(path, file)))
-            if create_dt - datetime.now() > timedelta(hours=1):
+            if datetime.now() - create_dt < timedelta(hours=1):
+                logger.info('Обнаружены свежие файлы, пока не обьединяем')
                 return True
         return False
 
@@ -50,16 +51,18 @@ class VideoManager(Thread):
                     else:
                         break
                 result_name = merge_clips(files_to_merge, os.path.join(self.video_path, directory, 'temp'),
-                                          os.path.join(self.video_path, directory))
+                                          os.path.join(self.video_path, directory), car_license_table=directory)
+                #  directory and car_license_table are same
                 logger.info(f'File created: {result_name}')
 
     def run(self):
         while True:
             try:
                 for directory in os.listdir(self.video_path):
-                    files = os.listdir(os.path.join(self.video_path, directory, 'temp'))
+                    temp_dir = os.path.join(self.video_path, directory, 'temp')
+                    files = os.listdir(temp_dir)
                     files.sort()
-                    if self.check_upload_progress(files, os.path.join(self.video_path, directory, 'temp')):
+                    if self.check_upload_progress(files, temp_dir):
                         break
                     self.merge_closest_clips(directory, files)
                 if self.delete_old:

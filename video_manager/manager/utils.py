@@ -5,7 +5,8 @@ from typing import List
 
 import cv2
 
-from settings import DATE_FORMAT, FPS
+from db.db import DBConnect
+from settings import DATE_FORMAT, FPS, DB_URL
 
 
 def extract_datetime(filename):
@@ -36,7 +37,7 @@ def get_clips_by_name(clips: List[str], name: str):
     return None
 
 
-def merge_clips(clips: List[str], input_path, out_path: str) -> str:
+def merge_clips(clips: List[str], input_path, out_path: str, car_license_table: str) -> str:
     """
     Merge clips
     :param out_path: str
@@ -76,5 +77,7 @@ def merge_clips(clips: List[str], input_path, out_path: str) -> str:
     os.remove('input.txt')
     for filename in clips:
         os.remove(os.path.join(input_path, filename))
+    with DBConnect(DB_URL, car_license_table) as db:
+        db.delete_records(clips)
 
     return output_name
