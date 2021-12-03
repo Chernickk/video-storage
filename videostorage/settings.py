@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
 ]
 
 TEMP_MEDIA_FOLDER = 'media/temp'
-REQUEST_MEDIA_FOLDER = 'E:\\video'
+MEDIA_FOLDER = 'E:\\video'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
