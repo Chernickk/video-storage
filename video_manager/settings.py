@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-VIDEO_DIR = os.path.join(BASE_DIR.parent, 'video')
+BASE_DIR = Path(__file__).resolve().parent
+VIDEO_DIR = os.path.join(BASE_DIR.parent.parent, 'video')
 
 DATE_FORMAT = '%Y-%m-%d_%H-%M-%S'
 FPS = 15
