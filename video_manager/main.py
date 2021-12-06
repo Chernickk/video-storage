@@ -7,5 +7,5 @@ from settings import VIDEO_DIR
 if __name__ == '__main__':
     video_manager = VideoManager(video_path=VIDEO_DIR,
                                  delete_old=False,
-                                 interval=timedelta(minutes=30))
+                                 interval=timedelta(minutes=1))
     video_manager.start()

@@ -4,7 +4,6 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from "react-loader-spinner";
 import Select from "react-select";
 import axios from "axios";
 import classes from './ActionForm.module.css';
@@ -14,6 +13,14 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const url = '127.0.0.1:8000'
+
+const customStyles = value => ({
+  control: (provided, state) => ({
+    ...provided,
+    alignItems: "baseline",
+    backgroundColor: "#252F48"
+  })
+});
 
 class ActionForm extends Component {
     constructor(props) {

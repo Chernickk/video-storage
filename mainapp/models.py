@@ -7,6 +7,9 @@ from django.conf import settings
 class Car(models.Model):
     name = models.CharField(max_length=255)
     license_table = models.CharField(max_length=15, null=True)
+    ip_address = models.CharField(max_length=16, null=True)
+    last_seen = models.DateTimeField(null=True)
+    online = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'car'

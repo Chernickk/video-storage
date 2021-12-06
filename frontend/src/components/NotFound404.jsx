@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NotFound404 = ({location}) => {
+const NotFound404 = () => {
     return (
         <div>
-            <h2>Page with address { location.pathname } not found</h2>
+            <h1>Страница не найдена</h1>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 
 body {
     font-family: Gill Sans Extrabold, sans-serif;
+    background-color: #252F48;
 }
 
 a {
@@ -25,7 +26,7 @@ a {
 
 .container {
     margin: 0 auto;
-    background-color: #cfe8ff;
+    background-color: #81c6be;
 
     display: grid;
     /*justify-content: center;*/
@@ -34,7 +35,6 @@ a {
     "nav form"
     "footer footer";
     width: 100vh;
-    height: 100vh;
     grid-gap: 10px;
 }
 
@@ -52,7 +52,6 @@ a {
 
 .Content {
     grid-area: form;
-    height: 80vh;
     width: 70vh;
     display: flex;
     flex-direction: column;
@@ -78,8 +77,8 @@ a {
 
 .submit-button {
     height: 40px;
-    background-color: black;
-    color: white;
+    background-color: #252F48;
+    color: #EDB749;
     font-weight: 900;
     font-size: 20px;
     box-shadow: 0 0 30px #383838;
