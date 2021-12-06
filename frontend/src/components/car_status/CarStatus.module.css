@@ -1,0 +1,33 @@
+.table-header {
+    width: 500px;
+}
+
+.table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 14px;
+    text-align: left;
+    background: #252F48;
+    max-width: 350px;
+    box-shadow: 0 0 30px #383838;
+}
+
+.table th {
+    color: #EDB749;
+    border: 1px solid #37B5A5;
+    padding: 12px 5px;
+}
+
+.table td {
+    color: #CAD4D6;
+    border: 1px solid #37B5A5;
+    padding: 7px 5px;
+}
+
+.table tr:hover td {
+    text-decoration: underline;
+}
+
+.button {
+    width: 350px;
+    margin-bottom: 10px;
+}
