@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 from sqlalchemy.ext.automap import automap_base
@@ -39,7 +40,10 @@ class DBConnect:
         cars = self.get_cars()
         for car in cars:
             if car.ip_address:
-                car.status = bool(ping(car.ip_address))
+                car_status = bool(ping(car.ip_address))
+                car.online = car_status
+                if car_status:
+                    car.last_seen = datetime.datetime.now()
         self.session.commit()
 
     def delete_records(self, filenames: List[str]):

@@ -7,12 +7,16 @@ const Nav = () => {
         <div className={'Nav'}>
             <div className={classes.links}>
                 <div className={classes.link}>
-                    <NavLink to="/" className={isActive => "nav-link" + (!isActive ? " unselected" : "")}>
+                    <NavLink
+                        to="/"
+                        className={(navData) => "nav-link" + (!navData.isActive ? ` ${classes.unselected}` : ` ${classes.active}`)}>
                         <p>
                             Запросы с камер
                         </p>
                     </NavLink>
-                    <NavLink to="/cars" className={isActive => "nav-link" + (!isActive ? " unselected" : "")}>
+                    <NavLink
+                        to="/cars"
+                        className={(navData) => "nav-link" + (!navData.isActive ? ` ${classes.unselected}` : ` ${classes.active}`)}>
                         <p>
                             Статус машин
                         </p>

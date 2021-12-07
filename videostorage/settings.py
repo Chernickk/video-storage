@@ -143,7 +143,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static')
 ]
 
-TEMP_MEDIA_FOLDER = 'media/temp'
 MEDIA_FOLDER = 'E:\\video'
 
 # Default primary key field type

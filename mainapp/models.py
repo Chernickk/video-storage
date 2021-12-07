@@ -10,6 +10,7 @@ class Car(models.Model):
     ip_address = models.CharField(max_length=16, null=True)
     last_seen = models.DateTimeField(null=True)
     online = models.BooleanField(default=False)
+    loading = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'car'
@@ -25,11 +26,18 @@ class Action(models.Model):
 
 
 class Request(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.DO_NOTHING)
     start_time = models.DateTimeField()
     finish_time = models.DateTimeField()
     delivered = models.BooleanField(default=False)
     record_status = models.BooleanField(null=True)
+
+    def delete(self, *args, **kwargs):
+        records = Record.objects.filter(request__pk=self.pk)
+        for record in records:
+            record.delete()
+
+        return super().delete(*args, **kwargs)
 
     class Meta:
         db_table = 'request'
@@ -48,16 +56,16 @@ class Record(models.Model):
     class Meta:
         db_table = 'record'
 
-    def delete(self, using=None, keep_parents=False):
+    def delete(self, *args, **kwargs):
         if not self.request:
-            path = os.path.join(settings.REQUEST_MEDIA_FOLDER, self.car.license_table, 'temp', self.file_name)
+            path = os.path.join(settings.MEDIA_FOLDER, self.car.license_table, 'temp', self.file_name)
         else:
-            path = os.path.join(settings.REQUEST_MEDIA_FOLDER, self.car.license_table, 'requests', self.file_name)
+            path = os.path.join(settings.MEDIA_FOLDER, self.car.license_table, 'requests', self.file_name)
 
         if os.path.exists(path):
             os.remove(path)
 
-        return super().delete()
+        return super().delete(*args, **kwargs)
 
 
 class GPS(models.Model):
