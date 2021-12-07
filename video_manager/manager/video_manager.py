@@ -5,7 +5,9 @@ from time import sleep
 from typing import List
 
 from manager.utils import extract_name, extract_datetime, get_duration, merge_clips
+from db.db import DBConnect
 from logs.logger import logger
+from settings import DB_URL
 
 
 class VideoManager(Thread):
@@ -55,6 +57,10 @@ class VideoManager(Thread):
                 #  directory and car_license_table are same
                 logger.info(f'File created: {result_name}')
 
+    def update_cars_statuses(self):
+        with DBConnect(DB_URL) as conn:
+            conn.update_cars_statuses()
+
     def run(self):
         while True:
             try:
@@ -65,8 +71,11 @@ class VideoManager(Thread):
                     if self.check_upload_progress(files, temp_dir):
                         break
                     self.merge_closest_clips(directory, files)
+
                 if self.delete_old:
                     self.delete_old_files(self.video_path, timedelta(days=60))
+
+                self.update_cars_statuses()
 
             except Exception as error:
                 logger.exception(f'{error}')

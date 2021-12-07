@@ -8,7 +8,14 @@ const Nav = () => {
             <div className={classes.links}>
                 <div className={classes.link}>
                     <NavLink to="/" className={isActive => "nav-link" + (!isActive ? " unselected" : "")}>
-                        Запросы с камер
+                        <p>
+                            Запросы с камер
+                        </p>
+                    </NavLink>
+                    <NavLink to="/cars" className={isActive => "nav-link" + (!isActive ? " unselected" : "")}>
+                        <p>
+                            Статус машин
+                        </p>
                     </NavLink>
                 </div>
             </div>

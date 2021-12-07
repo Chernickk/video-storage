@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/footer";
 import Requests from "./components/requests/Requests";
+import CarStatus from "./components/car_status/CarStatus"
 import axios from "axios";
 
 
@@ -16,7 +17,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 class App extends react.Component {
     constructor(props) {
         super(props)
+        this.getCarsData = this.getCarsData.bind(this)
         this.state = {
+
             'cars': [],
             'requests': [],
             'cars_status': false,
@@ -24,7 +27,7 @@ class App extends react.Component {
         }
     }
 
-    componentDidMount() {
+    getCarsData() {
         axios.get(`/api/cars`)
             .then(response => {
                 const cars = response.data
@@ -36,7 +39,9 @@ class App extends react.Component {
                     }
                 )
             }).catch(error => console.log(error))
-
+    }
+    componentDidMount() {
+        this.getCarsData()
         axios.get(`/api/requests`)
             .then(response => {
                 let requests = response.data
@@ -59,13 +64,23 @@ class App extends react.Component {
                     <Header/>
                     <Nav/>
                     <Routes>
-                        <Route exact path='/' element={this.state.request_status &&
-                        this.state.cars_status &&
-                        <Requests
-                            cars={this.state.cars}
-                            requests={this.state.requests}
-                        />}/>
-                        <Route element={NotFound404}/>
+                        <Route path='*' element={<NotFound404/>}/>
+                        <Route exact path='/cars' element={
+                            this.state.cars_status &&
+                            <CarStatus
+                                cars={this.state.cars}
+                                getCarsData={this.getCarsData}
+                            />
+                        }/>
+                        <Route exact path='/' element={
+                            this.state.request_status &&
+                            this.state.cars_status &&
+                            <Requests
+                                cars={this.state.cars}
+                                requests={this.state.requests}
+                            />
+                        }/>
+
                     </Routes>
                     <Footer/>
                 </BrowserRouter>

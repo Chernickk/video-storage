@@ -104,6 +104,7 @@ class Requests extends Component {
                                     }
                                 }
                             )}
+                            placeholder={'Выберите машину'}
                             value={this.state.select_value}
                             onChange={(event) => this.handleChange(event, 'select_value')}
                         />
@@ -129,7 +130,7 @@ class Requests extends Component {
                             required={true}
                         />
 
-                        <input type="submit" value="Submit" className={"submit-button"}/>
+                        <input type="submit" value="Создать запрос" className={"submit-button"}/>
                         {this.state.show_message && <h3>{this.state.message_text}</h3>}
                         {this.state.show_loader && <div className={'loader-spinner'}>
                             <Loader
